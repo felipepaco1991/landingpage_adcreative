@@ -122,7 +122,13 @@ export default function SuccessStoriesSection({ onContactClick }) {
                                     Sua empresa pode ser a próxima história de sucesso.
                                 </p>
                                 <Button 
-                                    onClick={() => window.open('https://wa.link/s45vtx', '_blank')}
+                                    onClick={() => {
+                                      if (onContactClick) {
+                                        onContactClick()
+                                      } else {
+                                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                                      }
+                                    }}
                                     className="bg-white text-red-600 hover:bg-gray-100 font-semibold shadow-lg"
                                 >
                                     Entre em contato

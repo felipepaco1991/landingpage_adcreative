@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowRight, Mail, Linkedin, User, MessageSquare, CheckCircle2, Loader2, Building } from "lucide-react";
 
 export default function ContactSection() {
+    const formRef = useRef(null);
     const [formData, setFormData] = useState({
         name: '',
         company: '',
@@ -68,7 +69,14 @@ export default function ContactSection() {
                         </p>
 
                         <Button 
-                            onClick={() => window.open('https://wa.link/s45vtx', '_blank')}
+                            type="button"
+                            onClick={() => {
+                              formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              const firstInput = formRef.current?.querySelector('input');
+                              if (firstInput) {
+                                setTimeout(() => firstInput.focus(), 250);
+                              }
+                            }}
                             className="w-full bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-semibold py-6 rounded-xl shadow-lg mb-8"
                         >
                             Agende uma conversa
@@ -109,7 +117,7 @@ export default function ContactSection() {
                                 <p className="text-gray-500">Entraremos em contato em breve.</p>
                             </motion.div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="space-y-5">
+                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                                 <div>
                                     <Label htmlFor="name" className="text-gray-700 text-sm mb-2 block">Nome</Label>
                                     <div className="relative">

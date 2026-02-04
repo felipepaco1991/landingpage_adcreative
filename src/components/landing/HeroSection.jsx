@@ -52,11 +52,18 @@ export default function HeroSection({ onContactClick }) {
                     {/* CTAs */}
                     <div className="flex flex-wrap gap-4">
                         <Button 
-                            onClick={() => window.open('https://wa.link/s45vtx', '_blank')}
+                            onClick={() => {
+                              if (onContactClick) {
+                                onContactClick()
+                              } else {
+                                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                              }
+                            }}
                             size="lg"
                             className="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-semibold px-8 py-6 text-lg rounded-xl shadow-lg shadow-yellow-500/20 transition-all duration-300 hover:scale-105"
                         >
-                            Agende uma reunião<ArrowRight className="ml-2 h-5 w-5" />
+                            <span>Agende uma reunião</span>
+                            <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                         <Button 
                             variant="outline"

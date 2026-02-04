@@ -58,7 +58,7 @@ export default function AboutSection() {
                             <div className="mb-6">
                                 <div className="rounded-2xl overflow-hidden mb-4">
                                     <img 
-                                        src="/assets/landing/29ff63a3f_image.png"
+                                        src="/assets/landing/Gregorio.png"
                                         alt="Gregorio Polaino"
                                         className="w-full h-80 object-cover object-top"
                                     />
