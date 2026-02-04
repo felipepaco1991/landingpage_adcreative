@@ -17,15 +17,43 @@ export default function ContactSection() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        setSubmitError(null);
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        setFormData({ name: '', company: '', email: '', subject: '', message: '' });
+        try {
+            const payload = new FormData();
+            payload.append("name", formData.name);
+            payload.append("company", formData.company);
+            payload.append("email", formData.email);
+            payload.append("subject", formData.subject);
+            payload.append("message", formData.message);
+            payload.append("_subject", "Novo contato - AD Creatives");
+            payload.append("_template", "table");
+            payload.append("_captcha", "false");
+
+            const response = await fetch("https://formsubmit.co/ajax/contato@adcreatives.com", {
+                method: "POST",
+                body: payload,
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Falha ao enviar o formulário.");
+            }
+
+            setIsSubmitted(true);
+            setFormData({ name: '', company: '', email: '', subject: '', message: '' });
+        } catch (error) {
+            setSubmitError("Não foi possível enviar agora. Tente novamente em instantes.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -130,6 +158,9 @@ export default function ContactSection() {
                             </motion.div>
                         ) : (
                             <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+                                {submitError && (
+                                    <p className="text-sm text-red-600">{submitError}</p>
+                                )}
                                 <div>
                                     <Label htmlFor="name" className="text-gray-700 text-sm mb-2 block">Nome</Label>
                                     <div className="relative">
