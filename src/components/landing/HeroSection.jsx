@@ -10,7 +10,7 @@ export default function HeroSection({ onContactClick }) {
             <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a0808] to-[#2d1010]" />
             
             {/* Background Image */}
-            <div className="absolute right-0 top-0 bottom-0 w-2/3 opacity-20">
+            <div className="absolute right-0 top-0 bottom-0 w-full opacity-20">
                 <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#0a0a0a]/40 via-[#0a0a0a]/80 to-[#0a0a0a]" />
                 <img 
                     src="/assets/landing/cristo.jpg"
