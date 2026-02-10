@@ -10,6 +10,8 @@ import { getCopy } from "@/lib/landingCopy";
 export default function ContactSection() {
     const formRef = useRef(null);
     const { contact } = getCopy();
+    const contactEmail = "contato@adcreatives.com.br";
+    const formSubmitEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
     const [formData, setFormData] = useState({
         name: '',
         company: '',
@@ -37,7 +39,7 @@ export default function ContactSection() {
             payload.append("_template", "table");
             payload.append("_captcha", "false");
 
-            const response = await fetch("https://formsubmit.co/ajax/contato@adcreatives.com", {
+            const response = await fetch(formSubmitEndpoint, {
                 method: "POST",
                 body: payload,
                 headers: {
@@ -49,9 +51,15 @@ export default function ContactSection() {
                 throw new Error(contact.submitFailure);
             }
 
+            const result = await response.json();
+            if (!result?.success) {
+                throw new Error(result?.message || contact.submitFailure);
+            }
+
             setIsSubmitted(true);
             setFormData({ name: '', company: '', email: '', subject: '', message: '' });
         } catch (error) {
+            console.error("Form submit failed:", error);
             setSubmitError(contact.submitError);
         } finally {
             setIsSubmitting(false);
@@ -126,9 +134,9 @@ export default function ContactSection() {
                         </div>
 
                         <div className="space-y-4">
-                            <a href="mailto:contato@adcreatives.com" className="flex items-center gap-3 text-white/80 hover:text-white transition-colors">
+                            <a href={`mailto:${contactEmail}`} className="flex items-center gap-3 text-white/80 hover:text-white transition-colors">
                                 <Mail className="w-5 h-5" />
-                                <span>contato@adcreatives.com</span>
+                                <span>{contactEmail}</span>
                             </a>
                             <a href="https://www.linkedin.com/company/ad-creatives/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/80 hover:text-white transition-colors">
                                 <Linkedin className="w-5 h-5" />
