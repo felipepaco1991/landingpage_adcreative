@@ -106,14 +106,14 @@ const landingCopy = {
         "Empresas internacionais que confiaram na Ad.Creatives para expandir suas operações no Brasil.",
       items: [
         {
-          flag: "/assets/landing/Flag_of_the_United_States.jpg",
+          flag: "https://itb.adcreatives.com.br/assets/landing/Flag_of_the_United_States.jpg",
           company: "Deal-Engine",
           location: "US",
           description:
             "Empresa de tecnologia, líder no setor, especializada em automação de lógicas de negócios de post booking aéreo.",
         },
         {
-          flag: "/assets/landing/Flag_of_the_United_States.jpg",
+          flag: "https://itb.adcreatives.com.br/assets/landing/Flag_of_the_United_States.jpg",
           company: "BrTravel Corp",
           location: "US",
           description:
@@ -289,14 +289,14 @@ const landingCopy = {
         "International companies that trusted Ad.Creatives to expand their operations in Brazil.",
       items: [
         {
-          flag: "/assets/landing/Flag_of_the_United_States.jpg",
+          flag: "https://itb.adcreatives.com.br/assets/landing/Flag_of_the_United_States.jpg",
           company: "Deal-Engine",
           location: "US",
           description:
             "Technology company and industry leader, specialized in automating post-booking airline business logic.",
         },
         {
-          flag: "/assets/landing/Flag_of_the_United_States.jpg",
+          flag: "https://itb.adcreatives.com.br/assets/landing/Flag_of_the_United_States.jpg",
           company: "BrTravel Corp",
           location: "US",
           description:
@@ -367,13 +367,30 @@ const landingCopy = {
 };
 
 const normalizeLang = (rawLang) => {
-  const value = (rawLang || "pt").toLowerCase();
+  const value = (rawLang || "en").toLowerCase();
   if (value.startsWith("en")) {
     return "en";
   }
   return "pt";
 };
 
-export const getLang = () => normalizeLang(import.meta.env.VITE_LANG);
+const getLangFromPath = () => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  if (/^\/pt-br(\/|$)/i.test(window.location.pathname)) {
+    return "pt";
+  }
+
+  if (/^\/en(\/|$)/i.test(window.location.pathname)) {
+    return "en";
+  }
+
+  return "en";
+};
+
+export const getLang = () =>
+  normalizeLang(getLangFromPath() || import.meta.env.VITE_LANG);
 
 export const getCopy = () => landingCopy[getLang()];

@@ -6,24 +6,17 @@ const BRAZIL_FLAG_URL =
 const USA_FLAG_URL =
   "https://itb.adcreatives.com.br/assets/landing/Flag_of_the_United_States.jpg";
 
-const isEnPath = () => {
-  if (typeof window === "undefined") return false;
-  return /^\/en(\/|$)/i.test(window.location.pathname);
-};
-
-const getActiveLanguage = () => (isEnPath() ? "en" : getLang());
-
 const getHref = (targetLang) => {
   if (typeof window === "undefined") {
-    return targetLang === "en" ? "/en/" : "/";
+    return targetLang === "pt" ? "/pt-br/" : "/";
   }
 
   const suffix = `${window.location.search}${window.location.hash}`;
-  return targetLang === "en" ? `/en/${suffix}` : `/${suffix}`;
+  return targetLang === "pt" ? `/pt-br/${suffix}` : `/${suffix}`;
 };
 
 export default function LanguageSwitcher() {
-  const activeLanguage = getActiveLanguage();
+  const activeLanguage = getLang();
   const label = activeLanguage === "en" ? "Language" : "Idioma";
 
   const options = [
