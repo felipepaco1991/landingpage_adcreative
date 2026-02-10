@@ -2,8 +2,12 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { getCopy } from "@/lib/landingCopy";
+import LanguageSwitcher from "@/components/landing/LanguageSwitcher";
 
 export default function HeroSection({ onContactClick }) {
+    const { hero } = getCopy();
+
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden">
             {/* Background Gradient */}
@@ -22,6 +26,8 @@ export default function HeroSection({ onContactClick }) {
             {/* Decorative Elements */}
             <div className="absolute top-20 right-10 w-[600px] h-[600px] bg-gradient-radial from-red-900/30 via-red-800/15 to-transparent rounded-full blur-3xl" />
             <div className="absolute bottom-20 left-10 w-[500px] h-[500px] bg-gradient-radial from-amber-900/20 via-red-900/10 to-transparent rounded-full blur-3xl" />
+
+            <LanguageSwitcher />
             
             <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 w-full">
                 <motion.div
@@ -33,20 +39,20 @@ export default function HeroSection({ onContactClick }) {
                     {/* Badge */}
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span className="text-sm text-white/80 tracking-wide">Hub de Negócios</span>
+                        <span className="text-sm text-white/80 tracking-wide">{hero.badge}</span>
                     </div>
 
                     {/* Main Title */}
                     <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
-                        <span className="text-white">Conectando inovação global ao </span>
+                        <span className="text-white">{hero.titleLead}</span>
                         <span className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-emerald-400 bg-clip-text text-transparent">
-                            turismo brasileiro
+                            {hero.titleHighlight}
                         </span>
                     </h1>
 
                     {/* Subtitle */}
                     <p className="text-xl md:text-2xl text-white/60 mb-10 leading-relaxed max-w-2xl">
-                        Aceleramos a entrada e a expansão de empresas internacionais no Brasil, com estratégia, execução local e parcerias certas — reduzindo riscos e encurtando o caminho até resultados reais.
+                        {hero.subtitle}
                     </p>
 
                     {/* CTAs */}
@@ -62,7 +68,7 @@ export default function HeroSection({ onContactClick }) {
                             size="lg"
                             className="bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-semibold px-8 py-6 text-lg rounded-xl shadow-lg shadow-yellow-500/20 transition-all duration-300 hover:scale-105"
                         >
-                            <span>Agende uma reunião</span>
+                            <span>{hero.ctaPrimary}</span>
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                         <Button 
@@ -71,7 +77,7 @@ export default function HeroSection({ onContactClick }) {
                             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                             className="border-emerald-400/30 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400/20 hover:border-emerald-400/40 px-8 py-6 text-lg rounded-xl"
                         >
-                            Como atuamos
+                            {hero.ctaSecondary}
                         </Button>
                     </div>
                 </motion.div>

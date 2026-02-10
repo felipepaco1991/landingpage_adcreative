@@ -5,9 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, Mail, Linkedin, User, MessageSquare, CheckCircle2, Loader2, Building } from "lucide-react";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function ContactSection() {
     const formRef = useRef(null);
+    const { contact } = getCopy();
     const [formData, setFormData] = useState({
         name: '',
         company: '',
@@ -31,7 +33,7 @@ export default function ContactSection() {
             payload.append("email", formData.email);
             payload.append("subject", formData.subject);
             payload.append("message", formData.message);
-            payload.append("_subject", "Novo contato - AD Creatives");
+            payload.append("_subject", contact.subject);
             payload.append("_template", "table");
             payload.append("_captcha", "false");
 
@@ -44,13 +46,13 @@ export default function ContactSection() {
             });
 
             if (!response.ok) {
-                throw new Error("Falha ao enviar o formulário.");
+                throw new Error(contact.submitFailure);
             }
 
             setIsSubmitted(true);
             setFormData({ name: '', company: '', email: '', subject: '', message: '' });
         } catch (error) {
-            setSubmitError("Não foi possível enviar agora. Tente novamente em instantes.");
+            setSubmitError(contact.submitError);
         } finally {
             setIsSubmitting(false);
         }
@@ -75,10 +77,10 @@ export default function ContactSection() {
                     className="text-center mb-16"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        Sua empresa está avaliando expandir para o Brasil?
+                        {contact.title}
                     </h2>
                     <p className="text-xl text-white/60 max-w-2xl mx-auto">
-                        Entre em contato conosco e descubra como podemos ajudar sua empresa a ter sucesso no mercado brasileiro
+                        {contact.subtitle}
                     </p>
                 </motion.div>
 
@@ -89,11 +91,11 @@ export default function ContactSection() {
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-gradient-to-br from-red-600/80 to-red-700/80 backdrop-blur-sm rounded-3xl p-8 text-white"
-                    >
-                        <h3 className="text-2xl font-bold mb-4">Envie uma mensagem</h3>
+                    className="bg-gradient-to-br from-red-600/80 to-red-700/80 backdrop-blur-sm rounded-3xl p-8 text-white"
+                >
+                        <h3 className="text-2xl font-bold mb-4">{contact.infoTitle}</h3>
                         <p className="text-white/80 mb-8">
-                            Fale diretamente com nosso time e entenda como podemos acelerar sua entrada no mercado brasileiro.
+                            {contact.infoBody}
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-8">
@@ -102,14 +104,14 @@ export default function ContactSection() {
                                 onClick={() => window.open('https://wa.link/s45vtx', '_blank')}
                                 className="flex-1 bg-gradient-to-r from-yellow-500 to-yellow-400 hover:from-yellow-400 hover:to-yellow-300 text-black font-semibold py-6 rounded-xl shadow-lg"
                             >
-                                Clique no botão para contato direto
+                                {contact.directButton}
                                 <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                             <a
                                 href="https://wa.link/s45vtx"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label="Contato via WhatsApp"
+                                aria-label={contact.whatsappAria}
                                 className="flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 transition-transform duration-300 hover:scale-105"
                             >
                                 <svg
@@ -140,9 +142,9 @@ export default function ContactSection() {
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-white rounded-3xl p-8 shadow-2xl"
-                    >
-                        <h3 className="text-xl font-bold text-gray-900 mb-6">Agende uma conversa</h3>
+                    className="bg-white rounded-3xl p-8 shadow-2xl"
+                >
+                        <h3 className="text-xl font-bold text-gray-900 mb-6">{contact.formTitle}</h3>
 
                         {isSubmitted ? (
                             <motion.div
@@ -153,8 +155,8 @@ export default function ContactSection() {
                                 <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                                     <CheckCircle2 className="w-8 h-8 text-green-600" />
                                 </div>
-                                <h4 className="text-xl font-bold text-gray-900 mb-2">Mensagem enviada!</h4>
-                                <p className="text-gray-500">Entraremos em contato em breve.</p>
+                                <h4 className="text-xl font-bold text-gray-900 mb-2">{contact.successTitle}</h4>
+                                <p className="text-gray-500">{contact.successBody}</p>
                             </motion.div>
                         ) : (
                             <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
@@ -162,12 +164,12 @@ export default function ContactSection() {
                                     <p className="text-sm text-red-600">{submitError}</p>
                                 )}
                                 <div>
-                                    <Label htmlFor="name" className="text-gray-700 text-sm mb-2 block">Nome</Label>
+                                    <Label htmlFor="name" className="text-gray-700 text-sm mb-2 block">{contact.labels.name}</Label>
                                     <div className="relative">
                                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <Input
                                             id="name"
-                                            placeholder="Seu nome completo"
+                                            placeholder={contact.placeholders.name}
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                             className="pl-10 py-6 rounded-xl border-gray-200 focus:border-red-300 focus:ring-red-200"
@@ -177,12 +179,12 @@ export default function ContactSection() {
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="company" className="text-gray-700 text-sm mb-2 block">Nome da empresa</Label>
+                                    <Label htmlFor="company" className="text-gray-700 text-sm mb-2 block">{contact.labels.company}</Label>
                                     <div className="relative">
                                         <Building className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <Input
                                             id="company"
-                                            placeholder="Nome da sua empresa"
+                                            placeholder={contact.placeholders.company}
                                             value={formData.company}
                                             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                                             className="pl-10 py-6 rounded-xl border-gray-200 focus:border-red-300 focus:ring-red-200"
@@ -191,13 +193,13 @@ export default function ContactSection() {
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="email" className="text-gray-700 text-sm mb-2 block">Email</Label>
+                                    <Label htmlFor="email" className="text-gray-700 text-sm mb-2 block">{contact.labels.email}</Label>
                                     <div className="relative">
                                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                                         <Input
                                             id="email"
                                             type="email"
-                                            placeholder="seu@email.com"
+                                            placeholder={contact.placeholders.email}
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             className="pl-10 py-6 rounded-xl border-gray-200 focus:border-red-300 focus:ring-red-200"
@@ -208,12 +210,12 @@ export default function ContactSection() {
 
 
                                 <div>
-                                    <Label htmlFor="message" className="text-gray-700 text-sm mb-2 block">Mensagem</Label>
+                                    <Label htmlFor="message" className="text-gray-700 text-sm mb-2 block">{contact.labels.message}</Label>
                                     <div className="relative">
                                         <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                                         <Textarea
                                             id="message"
-                                            placeholder="Como podemos ajudar sua empresa?"
+                                            placeholder={contact.placeholders.message}
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                             className="pl-10 min-h-[120px] rounded-xl border-gray-200 focus:border-red-300 focus:ring-red-200"
@@ -229,11 +231,11 @@ export default function ContactSection() {
                                     {isSubmitting ? (
                                         <>
                                             <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                            Enviando...
+                                            {contact.submitting}
                                         </>
                                     ) : (
                                         <>
-                                            Enviar mensagem
+                                            {contact.submit}
                                             <ArrowRight className="ml-2 h-5 w-5" />
                                         </>
                                     )}

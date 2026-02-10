@@ -1,35 +1,15 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { Globe, Lightbulb, Users, Zap, Building } from "lucide-react";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function ServicesSection() {
-    const services = [
-        {
-            icon: Globe,
-            title: "Representação Internacional",
-            description: "Atuamos localmente em nome de empresas estrangeiras, viabilizando sua presença e operação no Brasil."
-        },
-        {
-            icon: Lightbulb,
-            title: "Hub de Soluções",
-            description: "Desenvolvemos estratégias, modelos de negócio e soluções para aumentar competitividade e gerar novas receitas."
-        },
-        {
-            icon: Users,
-            title: "Ativação de Negócios",
-            description: "Conectamos empresas a parceiros estratégicos, canais de venda, clientes e oportunidades reais de mercado."
-        },
-        {
-            icon: Zap,
-            title: "Inovação e Digitalização",
-            description: "Aceleramos a adoção de tecnologias, automação de processos e práticas modernas de gestão."
-        },
-        {
-            icon: Building,
-            title: "Governança Corporativa",
-            description: "Apoiamos a evolução da gestão, estrutura organizacional e excelência operacional."
-        }
-    ];
+    const { services: servicesCopy } = getCopy();
+    const icons = [Globe, Lightbulb, Users, Zap, Building];
+    const content = servicesCopy.items.map((item, index) => ({
+        ...item,
+        icon: icons[index] || Globe,
+    }));
 
     return (
         <section id="services" className="py-24 bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden">
@@ -46,20 +26,20 @@ export default function ServicesSection() {
                     className="text-center mb-16"
                 >
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-50 border border-red-100 mb-6">
-                        <span className="text-sm text-red-700 font-medium">Nossa Atuação</span>
+                        <span className="text-sm text-red-700 font-medium">{servicesCopy.badge}</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="text-gray-900">Não somos apenas consultores. </span>
-                        <span className="text-red-600">Nós executamos.</span>
+                        <span className="text-gray-900">{servicesCopy.titleLead}</span>
+                        <span className="text-red-600">{servicesCopy.titleHighlight}</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Somos o braço local de empresas internacionais que desejam iniciar ou expandir operações no Brasil, oferecendo suporte completo em todas as etapas:
+                        {servicesCopy.intro}
                     </p>
                 </motion.div>
 
                 {/* Services Grid */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {services.map((service, index) => (
+                    {content.map((service, index) => (
                         <motion.div
                             key={service.title}
                             initial={{ opacity: 0, y: 30 }}

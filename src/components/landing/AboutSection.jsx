@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { Award } from "lucide-react";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function AboutSection() {
+    const { about } = getCopy();
+
     return (
         <section id="about" className="py-24 bg-gradient-to-br from-[#fafafa] via-[#f8f8f8] to-[#f5f5f5] relative overflow-hidden">
             {/* Decorative */}
@@ -20,28 +23,28 @@ export default function AboutSection() {
                     >
                         {/* Badge */}
                         <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-50 border border-red-100 mb-6">
-                            <span className="text-sm text-red-700 font-medium">Sobre Nós</span>
+                            <span className="text-sm text-red-700 font-medium">{about.badge}</span>
                         </div>
 
                         <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                            <span className="text-gray-900">Quem </span>
-                            <span className="text-red-600">somos</span>
+                            <span className="text-gray-900">{about.titleLead}</span>
+                            <span className="text-red-600">{about.titleHighlight}</span>
                         </h2>
 
                         <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                            A Ad.Creatives é um hub de negócios que atua como ponte entre soluções globais e o ecossistema brasileiro de turismo e viagens. Operamos de forma E2E, acompanhando todo o ciclo de negócios: da avaliação de mercado à geração de resultados concretos.
+                            {about.paragraph1}
                         </p>
 
                         <p className="text-lg text-gray-600 leading-relaxed mb-6">
-                            A empresa é fundada e dirigida por Gregorio Polaino, executivo com mais de 35 anos de experiência no setor de turismo e viagens, com atuação internacional e profundo conhecimento do mercado brasileiro.
+                            {about.paragraph2}
                         </p>
 
-                        <p className="text-lg text-gray-600 leading-relaxed mb-8">Nossa missão é garantir que cada operação seja estruturada de forma competitiva, sustentável e alinhada às particularidades do Brasil.</p>
+                        <p className="text-lg text-gray-600 leading-relaxed mb-8">{about.paragraph3}</p>
 
                         {/* Badge */}
                         <div className="inline-flex items-center px-6 py-3 rounded-xl bg-red-50 border border-red-100">
                             <span className="text-2xl font-bold text-red-600">35+</span>
-                            <span className="ml-2 text-sm text-red-700 font-medium">anos de experiência no setor</span>
+                            <span className="ml-2 text-sm text-red-700 font-medium">{about.experienceLabel}</span>
                         </div>
                     </motion.div>
 
@@ -65,7 +68,7 @@ export default function AboutSection() {
                                 </div>
                                 <div className="text-center">
                                     <h3 className="text-2xl font-bold text-gray-900">Gregorio Polaino</h3>
-                                    <p className="text-gray-500 mt-1">Fundador & CEO</p>
+                                    <p className="text-gray-500 mt-1">{about.profileRole}</p>
                                 </div>
                             </div>
                         </div>

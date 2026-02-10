@@ -6,9 +6,11 @@ import ServicesSection from "@/components/landing/ServicesSection";
 import DifferentialSection from "@/components/landing/DifferentialSection";
 import SuccessStoriesSection from "@/components/landing/SuccessStoriesSection";
 import ContactSection from "@/components/landing/ContactSection";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function Home() {
     const contactRef = useRef(null);
+    const { footer, global } = getCopy();
 
     const scrollToContact = () => {
         contactRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +38,7 @@ export default function Home() {
                 href="https://wa.link/s45vtx"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Fale no WhatsApp"
+                aria-label={global.whatsappAria}
                 className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/40 transition-transform duration-300 hover:scale-110"
             >
                 <span className="absolute inset-0 rounded-full bg-emerald-400/40 blur-xl animate-pulse" />
@@ -55,11 +57,11 @@ export default function Home() {
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="text-white/60 text-sm">
-                            © 2026 Ad.Creatives. Todos os direitos reservados.
+                            {footer.copyright}
                         </div>
                         <div className="flex items-center gap-6 text-sm">
-                            <a href="#" className="text-white/60 hover:text-white transition-colors">Política de Privacidade</a>
-                            <a href="#" className="text-white/60 hover:text-white transition-colors">Termos de Serviço</a>
+                            <a href="#" className="text-white/60 hover:text-white transition-colors">{footer.privacy}</a>
+                            <a href="#" className="text-white/60 hover:text-white transition-colors">{footer.terms}</a>
                         </div>
                     </div>
                 </div>

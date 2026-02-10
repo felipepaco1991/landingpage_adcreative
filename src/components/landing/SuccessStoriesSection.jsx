@@ -2,40 +2,11 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { CheckCircle2, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function SuccessStoriesSection({ onContactClick }) {
-    const stories = [
-        {
-            flag: "/assets/landing/Flag_of_the_United_States.jpg",
-            company: "Deal-Engine",
-            location: "US",
-            description: "Empresa de tecnologia, líder no setor, especializada em automação de lógicas de negócios de post booking aéreo."
-        },
-        {
-            flag: "/assets/landing/Flag_of_the_United_States.jpg",
-            company: "BrTravel Corp",
-            location: "US",
-            description: "Consolidadora de bilhetes aéreos, especializada em conteúdo não disponível no ponto de venda do Brasil."
-        },
-        {
-            flag: "/assets/landing/Flag_of_the_Netherlands.jpg",
-            company: "Lufthansa City Center",
-            location: "NL",
-            description: "Rede global franquias de agências de viagens, líder, presente em mais de 100 países."
-        },
-        {
-            flag: "/assets/landing/Flag_of_Spain.jpg",
-            company: "Trapit",
-            location: "ES",
-            description: "Empresa de tecnologia especializada em \"rebooking e reshoping\" de bilhetes aéreos, gerador de economia em escala."
-        },
-        {
-            flag: "/assets/landing/Flag_of_Portugal.svg.png",
-            company: "Airmetclub",
-            location: "PT",
-            description: "Rede de agências de viagens independentes, apoiando as agências o aumento do profissionalismo e rentabilidade destas empresas."
-        }
-    ];
+    const { successStories } = getCopy();
+    const stories = successStories.items;
 
     return (
         <section className="py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
@@ -54,14 +25,14 @@ export default function SuccessStoriesSection({ onContactClick }) {
                     className="text-center mb-16"
                 >
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 mb-6">
-                        <span className="text-sm text-emerald-700 font-medium">Empresas Parceiras</span>
+                        <span className="text-sm text-emerald-700 font-medium">{successStories.badge}</span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="text-gray-900">Empresas </span>
-                        <span className="text-red-600">parceiras</span>
+                        <span className="text-gray-900">{successStories.titleLead}</span>
+                        <span className="text-red-600">{successStories.titleHighlight}</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Empresas internacionais que confiaram na Ad.Creatives para expandir suas operações no Brasil.
+                        {successStories.intro}
                     </p>
                 </motion.div>
 
@@ -117,9 +88,9 @@ export default function SuccessStoriesSection({ onContactClick }) {
                                 <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                                     <Rocket className="w-8 h-8 text-white" />
                                 </div>
-                                <h3 className="text-2xl font-bold mb-4">Sua empresa aqui?</h3>
+                                <h3 className="text-2xl font-bold mb-4">{successStories.ctaTitle}</h3>
                                 <p className="text-white/80 mb-6 leading-relaxed">
-                                    Sua empresa pode ser a próxima história de sucesso.
+                                    {successStories.ctaBody}
                                 </p>
                                 <Button 
                                     onClick={() => {
@@ -131,7 +102,7 @@ export default function SuccessStoriesSection({ onContactClick }) {
                                     }}
                                     className="bg-white text-red-600 hover:bg-gray-100 font-semibold shadow-lg"
                                 >
-                                    Entre em contato
+                                    {successStories.ctaButton}
                                 </Button>
                             </div>
                         </div>

@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { Globe, Target, Sparkles, Lightbulb, TrendingUp, Shield } from "lucide-react";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function ProposalSection() {
     const proposals = [];
+    const { proposal } = getCopy();
 
     return (
         <section className="py-24 bg-gradient-to-br from-white via-gray-50 to-white relative overflow-hidden">
@@ -23,22 +25,22 @@ export default function ProposalSection() {
                 >
                     {/* Opportunity Badge */}
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-6">
-                        <span className="text-sm text-blue-700 font-medium">Oportunidade</span>
+                        <span className="text-sm text-blue-700 font-medium">{proposal.badge}</span>
                     </div>
                     
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="text-gray-900">O mercado brasileiro </span>
-                        <span className="text-red-600">te espera</span>
+                        <span className="text-gray-900">{proposal.titleLead}</span>
+                        <span className="text-red-600">{proposal.titleHighlight}</span>
                     </h2>
                     
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-4">
-                        O Brasil é um dos mercados mais estratégicos do mundo para o setor de viagens e turismo, com grande potencial de crescimento. Ao mesmo tempo, apresenta desafios específicos de competitividade, digitalização, gestão e estruturação de canais.
+                        {proposal.paragraph1}
                     </p>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-6">
-                        Empresas internacionais que desejam atuar no país precisam de parceiros locais confiáveis, com visão estratégica, capacidade de execução e relacionamento com os principais players do mercado.
+                        {proposal.paragraph2}
                     </p>
                     <p className="text-xl font-semibold text-red-600 max-w-3xl mx-auto">
-                        É exatamente nesse ponto que a Ad.Creatives atua.
+                        {proposal.emphasis}
                     </p>
                 </motion.div>
 

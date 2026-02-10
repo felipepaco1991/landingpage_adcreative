@@ -1,28 +1,15 @@
 import React from 'react';
 import { motion } from "framer-motion";
 import { Target, Leaf, Zap } from "lucide-react";
+import { getCopy } from "@/lib/landingCopy";
 
 export default function DifferentialSection() {
-    const pillars = [
-        {
-            icon: Target,
-            title: "Competitiva",
-            description: "Estratégias que geram vantagem competitiva no mercado brasileiro.",
-            gradient: "from-red-500 to-red-600"
-        },
-        {
-            icon: Leaf,
-            title: "Sustentável",
-            description: "Crescimento estruturado, com foco no longo prazo.",
-            gradient: "from-emerald-500 to-emerald-600"
-        },
-        {
-            icon: Zap,
-            title: "Inovadora",
-            description: "Soluções criativas e tecnologia aplicada ao negócio.",
-            gradient: "from-amber-500 to-amber-600"
-        }
-    ];
+    const { differential } = getCopy();
+    const icons = [Target, Leaf, Zap];
+    const pillars = differential.pillars.map((pillar, index) => ({
+        ...pillar,
+        icon: icons[index] || Target,
+    }));
 
     return (
         <section className="py-24 bg-gradient-to-br from-[#0a0a0a] via-[#150808] to-[#1f0c0c] relative overflow-hidden">
@@ -40,16 +27,17 @@ export default function DifferentialSection() {
                     className="text-center mb-16"
                 >
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6">
-                        <span className="text-sm text-white/80 font-medium">Nosso Diferencial</span>
+                        <span className="text-sm text-white/80 font-medium">{differential.badge}</span>
                     </div>
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                        Nosso <span className="text-yellow-400">diferencial</span>
+                        {differential.titleLead}
+                        <span className="text-yellow-400">{differential.titleHighlight}</span>
                     </h2>
                     <p className="text-xl text-white/80 leading-relaxed mb-4 max-w-3xl mx-auto">
-                        O diferencial da Ad.Creatives está na combinação entre experiência internacional, execução local e profundo conhecimento do mercado brasileiro.
+                        {differential.paragraph1}
                     </p>
                     <p className="text-xl text-white/80 leading-relaxed max-w-3xl mx-auto">
-                        Trabalhamos com foco em resultados reais, construindo operações sólidas e duradouras.
+                        {differential.paragraph2}
                     </p>
                 </motion.div>
 
@@ -84,7 +72,7 @@ export default function DifferentialSection() {
                     className="text-center"
                 >
                     <p className="text-2xl md:text-3xl font-bold text-white">
-                        Ad.Creatives: onde o turismo encontra inovação, e os negócios encontram crescimento.
+                        {differential.tagline}
                     </p>
                 </motion.div>
             </div>
